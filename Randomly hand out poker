@@ -1,0 +1,44 @@
+/*写一个随机发牌的程序。用户指定发几张牌，程序打印手牌。程序的会话如下：
+
+Enter number of cards in hand: 5
+Your hand: 9c 7d 3c 5d kd*/
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+#include<stdbool.h>
+
+int main(void) {
+	//1_indicates a card
+	const char ranks[] = { '2','3','4','5','6','7','8','9','T','J','Q','K','A' };	//0~12
+	const char suits[] = { 'd','c','h','s' };//diamond方片	club梅花	heart红桃	spade黑桃	//0~3
+
+	//2_random
+	int num;
+	printf("Enter number of cards in hand: ");
+	scanf_s("%d", &num);
+	srand((unsigned int) time(NULL));
+
+	//3_judgeRepeat and output
+	bool in_hand[13][4] = {false};
+	int i = 0;
+	printf("Your hand:");
+	while (true) {
+		char rank = ranks[rand() % (12 - 0 + 1) + 0];//输出0~12随机数
+		char suit = suits[rand() % (3 - 0 + 1) + 0];//输出0~3随机数
+		if (in_hand[rank][suit]) {
+			continue;
+		}
+		else {
+			printf("%c%c  ", rank, suit);
+			in_hand[rank][suit] = true;
+			i++;
+		}
+		if (i >= num) {
+			break;
+		}
+	}
+
+	return 0;
+}
